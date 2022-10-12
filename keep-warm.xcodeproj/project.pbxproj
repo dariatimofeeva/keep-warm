@@ -14,6 +14,7 @@
 		0A78038328F6C264006BB77F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A78038228F6C264006BB77F /* Assets.xcassets */; };
 		0A78038628F6C264006BB77F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A78038428F6C264006BB77F /* LaunchScreen.storyboard */; };
 		0A78038E28F6C806006BB77F /* ClothesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A78038D28F6C806006BB77F /* ClothesVC.swift */; };
+		0AF47A4828F6FC6D00EE7012 /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF47A4728F6FC6D00EE7012 /* AlertController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		0A78038528F6C264006BB77F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0A78038728F6C264006BB77F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0A78038D28F6C806006BB77F /* ClothesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClothesVC.swift; sourceTree = "<group>"; };
+		0AF47A4728F6FC6D00EE7012 /* AlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 		0A78037828F6C262006BB77F /* keep-warm */ = {
 			isa = PBXGroup;
 			children = (
+				0A78038728F6C264006BB77F /* Info.plist */,
 				0AF47A4628F6F99B00EE7012 /* SupportingFiles */,
 				0AF47A4528F6F98B00EE7012 /* Extensions */,
 				0AF47A4428F6F97E00EE7012 /* View */,
@@ -94,6 +97,7 @@
 		0AF47A4528F6F98B00EE7012 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				0AF47A4728F6FC6D00EE7012 /* AlertController.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -105,7 +109,6 @@
 				0A78037B28F6C262006BB77F /* SceneDelegate.swift */,
 				0A78038228F6C264006BB77F /* Assets.xcassets */,
 				0A78038428F6C264006BB77F /* LaunchScreen.storyboard */,
-				0A78038728F6C264006BB77F /* Info.plist */,
 			);
 			path = SupportingFiles;
 			sourceTree = "<group>";
@@ -182,6 +185,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A78037E28F6C262006BB77F /* WeatherVC.swift in Sources */,
+				0AF47A4828F6FC6D00EE7012 /* AlertController.swift in Sources */,
 				0A78038E28F6C806006BB77F /* ClothesVC.swift in Sources */,
 				0A78037A28F6C262006BB77F /* AppDelegate.swift in Sources */,
 				0A78037C28F6C262006BB77F /* SceneDelegate.swift in Sources */,

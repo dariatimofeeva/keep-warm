@@ -7,10 +7,15 @@
 
 import UIKit
 
+// TODO: градиентный фон для разной погоды или смена фоновых изображений
+// TODO: замена weatherImage в зависимости от погоды
+// TODO: вопрос с вариантами ответа
+
 class WeatherVC: UIViewController {
     
     
     @IBAction func changeCityButton(_ sender: UIButton) {
+        self.presentSearchAlertController(withTitle: "Enter city name", message: nil, style: .alert)
     }
     @IBOutlet weak var weatherImageView: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
@@ -19,7 +24,7 @@ class WeatherVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+       
     }
 
 
