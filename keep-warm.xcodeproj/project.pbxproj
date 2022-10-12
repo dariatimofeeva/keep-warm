@@ -58,16 +58,56 @@
 		0A78037828F6C262006BB77F /* keep-warm */ = {
 			isa = PBXGroup;
 			children = (
+				0AF47A4628F6F99B00EE7012 /* SupportingFiles */,
+				0AF47A4528F6F98B00EE7012 /* Extensions */,
+				0AF47A4428F6F97E00EE7012 /* View */,
+				0AF47A4328F6F95200EE7012 /* Controllers */,
+				0AF47A4228F6F94400EE7012 /* Model */,
+			);
+			path = "keep-warm";
+			sourceTree = "<group>";
+		};
+		0AF47A4228F6F94400EE7012 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		0AF47A4328F6F95200EE7012 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				0A78038D28F6C806006BB77F /* ClothesVC.swift */,
+				0A78037D28F6C262006BB77F /* WeatherVC.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		0AF47A4428F6F97E00EE7012 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0A78037F28F6C262006BB77F /* Main.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		0AF47A4528F6F98B00EE7012 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		0AF47A4628F6F99B00EE7012 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
 				0A78037928F6C262006BB77F /* AppDelegate.swift */,
 				0A78037B28F6C262006BB77F /* SceneDelegate.swift */,
-				0A78037F28F6C262006BB77F /* Main.storyboard */,
-				0A78037D28F6C262006BB77F /* WeatherVC.swift */,
-				0A78038D28F6C806006BB77F /* ClothesVC.swift */,
 				0A78038228F6C264006BB77F /* Assets.xcassets */,
 				0A78038428F6C264006BB77F /* LaunchScreen.storyboard */,
 				0A78038728F6C264006BB77F /* Info.plist */,
 			);
-			path = "keep-warm";
+			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -300,7 +340,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -330,7 +370,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
