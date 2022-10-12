@@ -9,21 +9,23 @@
 /* Begin PBXBuildFile section */
 		0A78037A28F6C262006BB77F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A78037928F6C262006BB77F /* AppDelegate.swift */; };
 		0A78037C28F6C262006BB77F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A78037B28F6C262006BB77F /* SceneDelegate.swift */; };
-		0A78037E28F6C262006BB77F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A78037D28F6C262006BB77F /* ViewController.swift */; };
+		0A78037E28F6C262006BB77F /* WeatherVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A78037D28F6C262006BB77F /* WeatherVC.swift */; };
 		0A78038128F6C262006BB77F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A78037F28F6C262006BB77F /* Main.storyboard */; };
 		0A78038328F6C264006BB77F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A78038228F6C264006BB77F /* Assets.xcassets */; };
 		0A78038628F6C264006BB77F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A78038428F6C264006BB77F /* LaunchScreen.storyboard */; };
+		0A78038E28F6C806006BB77F /* ClothesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A78038D28F6C806006BB77F /* ClothesVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0A78037628F6C262006BB77F /* keep-warm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "keep-warm.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A78037928F6C262006BB77F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0A78037B28F6C262006BB77F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		0A78037D28F6C262006BB77F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		0A78037D28F6C262006BB77F /* WeatherVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherVC.swift; sourceTree = "<group>"; };
 		0A78038028F6C262006BB77F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0A78038228F6C264006BB77F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0A78038528F6C264006BB77F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0A78038728F6C264006BB77F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0A78038D28F6C806006BB77F /* ClothesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClothesVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,8 +60,9 @@
 			children = (
 				0A78037928F6C262006BB77F /* AppDelegate.swift */,
 				0A78037B28F6C262006BB77F /* SceneDelegate.swift */,
-				0A78037D28F6C262006BB77F /* ViewController.swift */,
 				0A78037F28F6C262006BB77F /* Main.storyboard */,
+				0A78037D28F6C262006BB77F /* WeatherVC.swift */,
+				0A78038D28F6C806006BB77F /* ClothesVC.swift */,
 				0A78038228F6C264006BB77F /* Assets.xcassets */,
 				0A78038428F6C264006BB77F /* LaunchScreen.storyboard */,
 				0A78038728F6C264006BB77F /* Info.plist */,
@@ -138,7 +141,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A78037E28F6C262006BB77F /* ViewController.swift in Sources */,
+				0A78037E28F6C262006BB77F /* WeatherVC.swift in Sources */,
+				0A78038E28F6C806006BB77F /* ClothesVC.swift in Sources */,
 				0A78037A28F6C262006BB77F /* AppDelegate.swift in Sources */,
 				0A78037C28F6C262006BB77F /* SceneDelegate.swift in Sources */,
 			);
