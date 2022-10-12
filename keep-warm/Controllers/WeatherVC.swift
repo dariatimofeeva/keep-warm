@@ -21,10 +21,13 @@ class WeatherVC: UIViewController {
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var cityLabel: UILabel!
     
+    var networkWeatherManager = NetworkWeatherManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
        
+        networkWeatherManager.fetchCurrentWeather(forCity: "London")
+        
     }
 
 
