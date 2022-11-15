@@ -7,4 +7,6 @@
 
 import Foundation
 
-let apiKey = "ad082c709f8e4c2f5dd58d520786e266"
+enum Constants {
+    static let apiKey = "ad082c709f8e4c2f5dd58d520786e266"
+}
