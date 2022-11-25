@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Foundation
 
 // TODO: градиентный фон для разной погоды или смена фоновых изображений
 // TODO: замена weatherImage в зависимости от погоды
@@ -22,12 +23,12 @@ class WeatherVC: UIViewController {
         return stack
     }()
     
-    private var cityStackView: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .horizontal
-        stack.spacing = 8
-        return stack
-    }()
+//    private var cityStackView: UIStackView = {
+//        let stack = UIStackView()
+//        stack.axis = .horizontal
+//        stack.spacing = 8
+//        return stack
+//    }()
     
     
     private var temperatureLabel: UILabel = {
@@ -68,6 +69,12 @@ class WeatherVC: UIViewController {
         return picker
     }()
     
+    private var whatToWearButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("What to wear? →", for: .normal)
+        return button
+    }()
+    
     lazy var gradient: CAGradientLayer = {
         let gradient = CAGradientLayer()
         gradient.type = .axial
@@ -87,9 +94,10 @@ class WeatherVC: UIViewController {
         view.layer.addSublayer(gradient)
        
         view.addSubview(weatherStackView)
-        view.addSubview(cityStackView)
+        //view.addSubview(cityStackView)
         view.backgroundColor = .gray
         citySearchButton.addTarget(self, action: #selector(citySearchButtonTapped), for: .touchUpInside)
+        whatToWearButton.addTarget(self, action: #selector(whatToWearButtonTappedd), for: .touchUpInside)
         addSubviewsForStacks()
         setConstraints()
         
@@ -102,29 +110,52 @@ class WeatherVC: UIViewController {
         weatherStackView.addArrangedSubview(cityLabel)
         weatherStackView.addArrangedSubview(weatherImageView)
         weatherStackView.addArrangedSubview(temperatureLabel)
-        
+        view.addSubview(citySearchButton)
+        view.addSubview(whatToWearButton)
+    
         //cityStackView.addArrangedSubview(cityLabel)
-        cityStackView.addArrangedSubview(citySearchButton)
+        //cityStackView.addArrangedSubview(citySearchButton)
         
     }
     
     private func setConstraints() {
         
         weatherStackView.translatesAutoresizingMaskIntoConstraints = false
-        cityStackView.translatesAutoresizingMaskIntoConstraints = false
+        //cityStackView.translatesAutoresizingMaskIntoConstraints = false
+        citySearchButton.translatesAutoresizingMaskIntoConstraints = false
+        whatToWearButton.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
             weatherStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             weatherStackView.heightAnchor.constraint(equalToConstant: 240),
             weatherStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
+//        NSLayoutConstraint.activate([
+//            cityStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+//            cityStackView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -24)
+//        ])
         NSLayoutConstraint.activate([
-            cityStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
-            cityStackView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -24)
+            // кнопка почему-то смещается, а не меняет размер
+//            citySearchButton.heightAnchor.constraint(equalToConstant: 100),
+//            citySearchButton.widthAnchor.constraint(equalToConstant: 100),
+            citySearchButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            citySearchButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -24),
+        ])
+        
+        NSLayoutConstraint.activate([
+            whatToWearButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            whatToWearButton.topAnchor.constraint(equalTo: weatherStackView.bottomAnchor)
         ])
     }
     
     @objc func citySearchButtonTapped() {
         presentSearchAlertController(withTitle: "Choose the city")
+    }
+    @objc func whatToWearButtonTappedd() {
+        if let clothesVC = ClothesVC() as? ClothesVC {
+            present(clothesVC, animated: true)
+        }
+        
     }
 
 }
@@ -133,7 +164,7 @@ extension WeatherVC: WeatherViewModelDelegate {
     func reloadData() {
         if let temp = viewModel.weatherData?.temp {
             cityLabel.text = viewModel.weatherData?.name
-            temperatureLabel.text = "\(temp)°C"
+            temperatureLabel.text = "\(Int(round(temp)))°C"
         }
     }
     

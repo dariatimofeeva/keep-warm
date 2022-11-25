@@ -39,7 +39,6 @@ class WeatherViewModel {
                 if let name = weather.name, let temp = weather.main?.temp, let icon =
                     weather.weather?.first?.icon {
                     self.weatherData = WeatherData(name: name, temp: temp, icon: icon)
-                    // вызвать метод weatherVC, используя делегат
                     DispatchQueue.main.async {
                         self.delegate?.reloadData()
                     }
