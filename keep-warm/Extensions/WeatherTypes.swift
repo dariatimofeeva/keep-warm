@@ -9,14 +9,14 @@ import Foundation
 
 var icon: String = "clear sky.png"
 
-enum WeatherTypes {
+enum WeatherTypes: CaseIterable {
+    case thunderstorm
     case clearSky
-    case fewClouds
+    case clouds
     case scatteredClouds
     case brokenClouds
     case showerRain
     case rain
-    case thunderstorm
     case snow
     case mist
     
@@ -24,7 +24,7 @@ enum WeatherTypes {
         switch self {
         case .clearSky:
             return "clear sky.png"
-        case .fewClouds:
+        case .clouds:
             return "few clouds.png"
         case .scatteredClouds:
             return "scattered clouds.png"
@@ -42,4 +42,30 @@ enum WeatherTypes {
             return "mist.png"
         }
     }
+    
+    var code: Int {
+        switch self {
+        case .thunderstorm:
+            return 200
+        case .clouds:
+            return 800
+        //default: return 0
+        case .clearSky:
+            return 0
+        case .scatteredClouds:
+            return 0
+        case .brokenClouds:
+            return 0
+        case .showerRain:
+            return 0
+        case .rain:
+            return 0
+        case .snow:
+            return 0
+        case .mist:
+            return 0
+        }
+        
+    }
+    
 }

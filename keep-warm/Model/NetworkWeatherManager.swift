@@ -16,6 +16,7 @@ enum WeatherError: Error {
 struct Weather: Decodable {
     let main: String?
     let icon: String?
+    let id: Int?
 }
 
 struct MainInfo: Decodable {

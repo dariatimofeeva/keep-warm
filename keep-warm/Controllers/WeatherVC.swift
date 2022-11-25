@@ -22,15 +22,7 @@ class WeatherVC: UIViewController {
         stack.distribution = .fillEqually
         return stack
     }()
-    
-//    private var cityStackView: UIStackView = {
-//        let stack = UIStackView()
-//        stack.axis = .horizontal
-//        stack.spacing = 8
-//        return stack
-//    }()
-    
-    
+      
     private var temperatureLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
@@ -43,6 +35,7 @@ class WeatherVC: UIViewController {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "clear sky.png")
         imageView.tintColor = .white
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
@@ -56,7 +49,8 @@ class WeatherVC: UIViewController {
     
     private var citySearchButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage.init(systemName: "magnifyingglass.circle"), for: .normal)
+        var image = UIImage.init(systemName: "magnifyingglass.circle")?.withRenderingMode(.alwaysTemplate)
+        button.setImage(image, for: .normal)
         button.tintColor = .white
         return button
     }()
@@ -112,32 +106,24 @@ class WeatherVC: UIViewController {
         weatherStackView.addArrangedSubview(temperatureLabel)
         view.addSubview(citySearchButton)
         view.addSubview(whatToWearButton)
-    
-        //cityStackView.addArrangedSubview(cityLabel)
-        //cityStackView.addArrangedSubview(citySearchButton)
-        
     }
     
     private func setConstraints() {
+        //WeatherTypes.allCases
         
         weatherStackView.translatesAutoresizingMaskIntoConstraints = false
-        //cityStackView.translatesAutoresizingMaskIntoConstraints = false
         citySearchButton.translatesAutoresizingMaskIntoConstraints = false
         whatToWearButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             weatherStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            weatherStackView.heightAnchor.constraint(equalToConstant: 240),
             weatherStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
-//        NSLayoutConstraint.activate([
-//            cityStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
-//            cityStackView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -24)
-//        ])
+
         NSLayoutConstraint.activate([
             // кнопка почему-то смещается, а не меняет размер
-//            citySearchButton.heightAnchor.constraint(equalToConstant: 100),
-//            citySearchButton.widthAnchor.constraint(equalToConstant: 100),
+            citySearchButton.heightAnchor.constraint(equalToConstant: 100),
+            citySearchButton.widthAnchor.constraint(equalToConstant: 100),
             citySearchButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
             citySearchButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -24),
         ])
@@ -161,6 +147,12 @@ class WeatherVC: UIViewController {
 }
 
 extension WeatherVC: WeatherViewModelDelegate {
+    func updateIcon() {
+        if let icon = viewModel.weatherData?.icon {
+            weatherImageView.image = UIImage(named: icon)
+        }
+    }
+    
     func reloadData() {
         if let temp = viewModel.weatherData?.temp {
             cityLabel.text = viewModel.weatherData?.name
