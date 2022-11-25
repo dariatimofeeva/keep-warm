@@ -41,7 +41,7 @@ class WeatherVC: UIViewController {
     
     private var weatherImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage.init(systemName: "cloud.sun")
+        imageView.image = UIImage(named: "clear sky.png")
         imageView.tintColor = .white
         return imageView
     }()

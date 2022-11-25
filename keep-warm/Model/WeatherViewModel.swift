@@ -22,7 +22,6 @@ class WeatherViewModel {
         let name: String
         let temp: Double
         let icon: String
-        
     }
     
     var weatherData: WeatherData?
