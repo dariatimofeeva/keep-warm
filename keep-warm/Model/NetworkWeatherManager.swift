@@ -35,7 +35,13 @@ struct Wind: Decodable {
     let speed: Double?
 }
 
-struct NetworkWeatherManager {
+protocol INetworkManager {
+    
+    func fetchCurrentWeather(forCity city: String, handle: @escaping((Result<WeatherCast, WeatherError>) -> ()))
+    
+}
+
+class NetworkWeatherManager: INetworkManager {
     
     func fetchCurrentWeather(forCity city: String, handle: @escaping((Result<WeatherCast, WeatherError>) -> ())) {
         let urlString = "https://api.openweathermap.org/data/2.5/weather?q=\(city)&apikey=\(Constants.apiKey)&units=metric"
@@ -63,4 +69,5 @@ struct NetworkWeatherManager {
         }
         task.resume()
     }
+    
 }

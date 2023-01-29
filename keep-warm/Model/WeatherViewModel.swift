@@ -6,11 +6,6 @@
 //
 
 import Foundation
-// TODO: получить погоду
-// TODO: сохранить ответ
-// TODO: делегат weatherViewModel и weatherVC
-
-let networkWeatherManager = NetworkWeatherManager()
 
 protocol WeatherViewModelDelegate: AnyObject {
     func reloadData()
@@ -18,7 +13,7 @@ protocol WeatherViewModelDelegate: AnyObject {
 }
 
 class WeatherViewModel {
-    
+
     struct WeatherData {
         let name: String
         let temp: Double
@@ -26,26 +21,28 @@ class WeatherViewModel {
         var icon: String = ""
     }
     
-    var weatherData: WeatherData? {
-        didSet {
-            setWeatherIcon()
-        }
-        
-    }
+    var networkWeatherManager: INetworkManager = NetworkWeatherManager()
+    
+    var currentWeatherType: WeatherClothesType?
+    
+    var weatherData: WeatherData?
     
     weak var delegate: WeatherViewModelDelegate?
     
     func getWeatherByCity(city: String) {
-        networkWeatherManager.fetchCurrentWeather(forCity: city) { result in
+        networkWeatherManager.fetchCurrentWeather(forCity: city) { [weak self] result in
             switch result {
             case .failure:
                 print("failure")
             case .success(let weather):
                 print("success")
+                // TODO: Добавить тост с отображением информации, что город не найден. Убрать по таймеру через 4 секунды
                 if let name = weather.name, let temp = weather.main?.temp, let id = weather.weather?.first?.id {
-                    self.weatherData = WeatherData(name: name, temp: temp, id: id)
+                    self?.weatherData = WeatherData(name: name, temp: temp, id: id)
+                    self?.setWeatherIcon()
+                    self?.setWeatherType()
                     DispatchQueue.main.async {
-                        self.delegate?.reloadData()
+                        self?.delegate?.reloadData()
                     }
                 }
             }
@@ -53,11 +50,31 @@ class WeatherViewModel {
     }
     
     private func setWeatherIcon() {
-        for type in WeatherTypes.allCases {
-            if let id = weatherData?.id, id >= type.code, id - type.code < 100 {
-                weatherData?.icon = type.value
-                delegate?.updateIcon()
+        if let id = weatherData?.id, let type = WeatherTypes.getWeatherType(by: id) {
+            weatherData?.icon = type.value
+            DispatchQueue.main.async {
+                self.delegate?.updateIcon()
             }
         }
     }
+    
+    private func setWeatherType() {
+    
+        
+        if let temp = weatherData?.temp {
+            if temp >= 20 {
+                currentWeatherType = .summer
+            }
+            else if temp >= 10 {
+                currentWeatherType = .warmDemi
+            }
+            else if temp >= 0 {
+                currentWeatherType = .coldDemi
+            }
+            else {
+                currentWeatherType = .winter
+            }
+        }
+    }
+    
 }

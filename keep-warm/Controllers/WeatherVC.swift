@@ -7,14 +7,13 @@
 
 import UIKit
 import Foundation
-
-// TODO: градиентный фон для разной погоды или смена фоновых изображений
-// TODO: замена weatherImage в зависимости от погоды
-// TODO: вопрос с вариантами ответа
+import MapKit
+import CoreLocation
 
 class WeatherVC: UIViewController {
     
     let viewModel = WeatherViewModel()
+    let locationManager = CLLocationManager()
     
     private var weatherStackView: UIStackView = {
         let stack = UIStackView()
@@ -42,6 +41,7 @@ class WeatherVC: UIViewController {
     private var cityLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 32)
         label.text = "London"
         label.textAlignment = .center
         return label
@@ -80,15 +80,13 @@ class WeatherVC: UIViewController {
         gradient.locations = [0, 0.5, 1]
         return gradient
     }()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         gradient.frame = view.bounds
         view.layer.addSublayer(gradient)
-       
         view.addSubview(weatherStackView)
-        //view.addSubview(cityStackView)
         view.backgroundColor = .gray
         citySearchButton.addTarget(self, action: #selector(citySearchButtonTapped), for: .touchUpInside)
         whatToWearButton.addTarget(self, action: #selector(whatToWearButtonTappedd), for: .touchUpInside)
@@ -96,6 +94,17 @@ class WeatherVC: UIViewController {
         setConstraints()
         
         viewModel.delegate = self
+        
+        locationManager.requestWhenInUseAuthorization()
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
+        }
+        
+        if let city = cityLabel.text {
+            viewModel.getWeatherByCity(city: city)
+        }
         
     }
 
@@ -109,7 +118,6 @@ class WeatherVC: UIViewController {
     }
     
     private func setConstraints() {
-        //WeatherTypes.allCases
         
         weatherStackView.translatesAutoresizingMaskIntoConstraints = false
         citySearchButton.translatesAutoresizingMaskIntoConstraints = false
@@ -121,7 +129,6 @@ class WeatherVC: UIViewController {
         ])
 
         NSLayoutConstraint.activate([
-            // кнопка почему-то смещается, а не меняет размер
             citySearchButton.heightAnchor.constraint(equalToConstant: 100),
             citySearchButton.widthAnchor.constraint(equalToConstant: 100),
             citySearchButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
@@ -137,11 +144,15 @@ class WeatherVC: UIViewController {
     @objc func citySearchButtonTapped() {
         presentSearchAlertController(withTitle: "Choose the city")
     }
+    
     @objc func whatToWearButtonTappedd() {
-        if let clothesVC = ClothesVC() as? ClothesVC {
-            present(clothesVC, animated: true)
-        }
+        if let currentWeatherType = viewModel.currentWeatherType {
+        let viewModel = ClothesViewModel(currentWeather: currentWeatherType)
+        let clothesVC = ClothesVC(viewModel: viewModel)
         
+            present(clothesVC, animated: true)
+            
+        }
     }
 
 }
@@ -160,4 +171,23 @@ extension WeatherVC: WeatherViewModelDelegate {
         }
     }
     
+}
+
+extension WeatherVC: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        print("locations = \(locValue.latitude) \(locValue.longitude)")
+        guard let location: CLLocation = manager.location else { return }
+        fetchCity(from: location) { city, error in
+            guard let city = city, error == nil else { return }
+            print(city)
+        }
+    }
+    
+    func fetchCity(from location: CLLocation, completion: @escaping (_ city: String?, _ error: Error?) -> ()) {
+        CLGeocoder().reverseGeocodeLocation(location) { placemarks, error in
+            completion(placemarks?.first?.locality,
+                       error)
+        }
+    }
 }
