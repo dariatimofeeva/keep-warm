@@ -37,14 +37,17 @@ struct Wind: Decodable {
 
 protocol INetworkManager {
     
+    var units: String {get set}
     func fetchCurrentWeather(forCity city: String, handle: @escaping((Result<WeatherCast, WeatherError>) -> ()))
     
 }
 
 class NetworkWeatherManager: INetworkManager {
     
+    var units: String = "metric"
+    
     func fetchCurrentWeather(forCity city: String, handle: @escaping((Result<WeatherCast, WeatherError>) -> ())) {
-        let urlString = "https://api.openweathermap.org/data/2.5/weather?q=\(city)&apikey=\(Constants.apiKey)&units=metric"
+        let urlString = "https://api.openweathermap.org/data/2.5/weather?q=\(city)&apikey=\(Constants.apiKey)&units=\(units)"
         guard let url = URL(string: urlString) else {
             handle(.failure(.wrongUrl))
             return

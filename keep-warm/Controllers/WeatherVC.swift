@@ -7,13 +7,10 @@
 
 import UIKit
 import Foundation
-import MapKit
-import CoreLocation
 
 class WeatherVC: UIViewController {
     
     let viewModel = WeatherViewModel()
-    let locationManager = CLLocationManager()
     
     private var weatherStackView: UIStackView = {
         let stack = UIStackView()
@@ -25,6 +22,7 @@ class WeatherVC: UIViewController {
     private var temperatureLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
+        label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 48, weight: .bold)
         label.text = "23°C"
         return label
@@ -38,7 +36,7 @@ class WeatherVC: UIViewController {
         return imageView
     }()
     
-    private var cityLabel: UILabel = {
+    private lazy var cityLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.font = UIFont.systemFont(ofSize: 32)
@@ -52,6 +50,12 @@ class WeatherVC: UIViewController {
         var image = UIImage.init(systemName: "magnifyingglass.circle")?.withRenderingMode(.alwaysTemplate)
         button.setImage(image, for: .normal)
         button.tintColor = .white
+        return button
+    }()
+    
+    private var unitsButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("change units", for: .normal)
         return button
     }()
     
@@ -89,23 +93,13 @@ class WeatherVC: UIViewController {
         view.addSubview(weatherStackView)
         view.backgroundColor = .gray
         citySearchButton.addTarget(self, action: #selector(citySearchButtonTapped), for: .touchUpInside)
-        whatToWearButton.addTarget(self, action: #selector(whatToWearButtonTappedd), for: .touchUpInside)
+        whatToWearButton.addTarget(self, action: #selector(whatToWearButtonTapped), for: .touchUpInside)
+        unitsButton.addTarget(self, action: #selector(unitsButtonTapped), for: .touchUpInside)
         addSubviewsForStacks()
         setConstraints()
         
         viewModel.delegate = self
-        
-        locationManager.requestWhenInUseAuthorization()
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-            locationManager.startUpdatingLocation()
-        }
-        
-        if let city = cityLabel.text {
-            viewModel.getWeatherByCity(city: city)
-        }
-        
+        viewModel.getCurrentLocation()
     }
 
     private func addSubviewsForStacks() {
@@ -115,6 +109,7 @@ class WeatherVC: UIViewController {
         weatherStackView.addArrangedSubview(temperatureLabel)
         view.addSubview(citySearchButton)
         view.addSubview(whatToWearButton)
+        view.addSubview(unitsButton)
     }
     
     private func setConstraints() {
@@ -122,6 +117,7 @@ class WeatherVC: UIViewController {
         weatherStackView.translatesAutoresizingMaskIntoConstraints = false
         citySearchButton.translatesAutoresizingMaskIntoConstraints = false
         whatToWearButton.translatesAutoresizingMaskIntoConstraints = false
+        unitsButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             weatherStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -139,13 +135,18 @@ class WeatherVC: UIViewController {
             whatToWearButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             whatToWearButton.topAnchor.constraint(equalTo: weatherStackView.bottomAnchor)
         ])
+        
+        NSLayoutConstraint.activate([
+            unitsButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            unitsButton.centerYAnchor.constraint(equalTo: citySearchButton.centerYAnchor)
+        ])
     }
     
     @objc func citySearchButtonTapped() {
         presentSearchAlertController(withTitle: "Choose the city")
     }
     
-    @objc func whatToWearButtonTappedd() {
+    @objc func whatToWearButtonTapped() {
         if let currentWeatherType = viewModel.currentWeatherType {
         let viewModel = ClothesViewModel(currentWeather: currentWeatherType)
         let clothesVC = ClothesVC(viewModel: viewModel)
@@ -155,9 +156,18 @@ class WeatherVC: UIViewController {
         }
     }
 
+    @objc func unitsButtonTapped() {
+        print(viewModel.networkWeatherManager.units)
+        viewModel.changeUnits()
+        print(viewModel.networkWeatherManager.units)
+    }
 }
 
 extension WeatherVC: WeatherViewModelDelegate {
+    func setCurrentCity(with name: String) {
+        cityLabel.text = name
+    }
+    
     func updateIcon() {
         if let icon = viewModel.weatherData?.icon {
             weatherImageView.image = UIImage(named: icon)
@@ -171,23 +181,4 @@ extension WeatherVC: WeatherViewModelDelegate {
         }
     }
     
-}
-
-extension WeatherVC: CLLocationManagerDelegate {
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-        print("locations = \(locValue.latitude) \(locValue.longitude)")
-        guard let location: CLLocation = manager.location else { return }
-        fetchCity(from: location) { city, error in
-            guard let city = city, error == nil else { return }
-            print(city)
-        }
-    }
-    
-    func fetchCity(from location: CLLocation, completion: @escaping (_ city: String?, _ error: Error?) -> ()) {
-        CLGeocoder().reverseGeocodeLocation(location) { placemarks, error in
-            completion(placemarks?.first?.locality,
-                       error)
-        }
-    }
 }
